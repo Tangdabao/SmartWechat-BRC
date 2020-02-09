@@ -12,7 +12,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.0",
+	"libVersion": "2.10.1",
 	"appid": "wx5ff625a48d3a7ae0",
 	"projectname": "Remote_Control",
 	"debugOptions": {
