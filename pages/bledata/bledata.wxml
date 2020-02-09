@@ -1,0 +1,176 @@
+<!--index.wxml-->
+<!--BATTERY-->
+<view wx:if="{{BatStatus==true}}">
+  <view class="container_BATTERY">
+    <image style="width: 25px; height: 10px; margin:0px;" mode="scaleToFill" src="../../image/LOWBAT.jpg"></image>
+    <text class="LOWBATTERY" decode="{{true}}">&nbsp;&nbsp;&nbsp;Low battery, please charge in time.</text>
+  </view>
+</view>
+
+<!--蓝牙状态信息---------------------------------------------------------------------------------------------------->
+<view wx:if="{{ConnectStats == '未连接'}}">
+  <view class="container_BLEstatus">
+    <view class="item1">
+      <image style="width: 10px; height: 10px; margin:0px;" mode="scaleToFill" src="../../image/ico_RED.jpg"></image>
+      <text class="container_BLEstatus_text" decode="{{true}}">&nbsp;蓝牙连接中断，下拉刷新</text>
+    </view>
+  </view>
+</view>
+
+<view wx:else="{{ConnectStats == '连接成功'}}">
+  <view class="container_BLEstatus">
+    <view class="item1">
+      <image style="width: 10px; height: 10px; margin:0px;" mode="scaleToFill" src="../../image/ico_GREEN.jpg"></image>
+      <text class="container_BLEstatus_text" decode="{{true}}">&nbsp;蓝牙已连接&nbsp;&nbsp;</text>
+    </view>
+    <view class="setDisabled">
+      <button type="default" size="mini" bindtap="CloseBlefun">断开</button>
+    </view>
+
+  </view>
+</view>
+
+<!--分割线----------------------------------------------------------------------------------------------------------->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+<!--温度信息---------------------------------------------------------------------------------------------------------->
+<view class="container_Temperature">
+  <view class="item_temperature">
+    <text class="item_temperature">{{temperature}}</text>
+  </view>
+  <view class="item_sheshidu">
+    <text class="item_sheshidu">℃</text>
+  </view>
+  <view class="item_pic">
+    <image style="width: 41px; height: 80px; margin:0px;" mode="scaleToFill" src="{{imageTemperature}}"></image>
+  </view>
+</view>
+
+
+
+<!--分割线----------------------------------------------------------------------------------------------------------->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
+
+<!--修改PWM
+<view class="section section_gap">
+  <text class="section__title">白光灯亮度</text>
+  <view class="body-view">
+    <slider show-value="ture" block-size="28" bindchange="modifyPwmfun" step="1" />
+  </view>
+</view>
+-->
+
+<!--LED信息
+<view class="container_LED">
+  <text class="LED">强光模式</text>
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+  <switch  bindchange="switch_LED_Change" />
+</view>
+-->
+
+
+<!--接收数据----------------------------------------------------------------------------------------------------------->
+<text class="textReceiveTitle">接收区域：</text>
+<view class="container_ReceiveArea">
+  <view class="section_reviceText">
+    <input maxlength="300" disable="true" placeholder="" value='{{receive_data}}'></input>
+  </view>
+</view>
+
+<view class="clr_Receive">
+  <button type="warn" size="default" bindtap="ClearReceiveTitle">清空接收区域
+  </button>
+</view>
+
+
+<text class="textReceiveTitle">发送区域：</text>
+<!--发送内容----------------------------------------------------------------------------------------------------->
+<!--输入框区域-->
+<view class='inputArea' style="background-color:{{inputBackgroundColor}}">
+  <view class='textInput' style="background-color:{{inputBackgroundColor}}">
+    <text style="white-space:pre-wrap" decode="{{true}}">{{send_data}}_</text>
+  </view>
+
+  <view class='touchArea_ReceiveICO delInput' style="background-color:{{inputBackgroundColor}}" catchtap='funcDelInput'>
+    <image class="delICO" style="width: 20px; height: 20px; " mode="scaleToFill" src="../../image/shanchu.png"></image>
+  </view>
+</view>
+
+
+<!--HEX键盘-->
+<view class='hexBoardArr'>
+  <view class='hexArr'>
+    <view class="oneKeyHex hexColor" hover-class="oneKeyPressHex" hover-stay-time="50" wx:for="{{hexArr1}}" wx:key="" catchtap='hexTap' data-str="{{item}}">{{item}}</view>
+  </view>
+  <view class='hexArr'>
+    <view class="oneKeyHex hexColor" hover-class="oneKeyPressHex" hover-stay-time="50" wx:for="{{hexArr2}}" wx:key="" catchtap='hexTap' data-str="{{item}}">{{item}}</view>
+    <view class="oneKeyHex hexColor" hover-class="oneKeyPressHex" hover-stay-time="50" wx:for="{{hexStr2}}" wx:key="" catchtap='backSpace' data-str="{{item}}">{{item}}</view>
+  </view>
+  <view class='hexArr'>
+    <view class="oneKeyHex hexColor" hover-class="oneKeyPressHex" hover-stay-time="50" wx:for="{{hexArr3}}" wx:key="" catchtap='hexTap' data-str="{{item}}">{{item}}</view>
+    <view class="oneKeyHex oneKeyBlueHex hexColor" hover-class="oneKeyPressBlueHex" hover-stay-time="50" wx:for="{{hexStr3}}" wx:key="" catchtap='chatinput' data-str="{{item}}">{{item}}</view>
+  </view>
+</view>
+
+
+
+<!--分割线----------------------------------------------------------------------------------------------------->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
+<!--断开连接按钮>
+<view wx:if="{{ConnectStats == '未连接'}}">
+  <view class="setDisabled">
+    <button type="warn" disabled="ture" size="default" bindtap="CloseBlefun">断开蓝牙连接
+    </button>
+  </view>
+</view>
+<view wx:else="{{ConnectStats == '连接成功'}}">
+  <view class="setDisabled">
+    <button type="warn" disabled="false" size="default" bindtap="CloseBlefun">断开蓝牙连接
+    </button>
+  </view>
+</view-->
+
+
+<text class="textSendTitle">2.4G device：</text>
+<view class="page-body">
+  <view class="page-section">
+    <view class="page-body-info">
+      <view class="devices_summary">已发现 {{device_RF_Num}} 个路灯控制器：</view>
+      <scroll-view class="device_list" scroll-y scroll-with-animation>
+        <view wx:for="{{devices}}" wx:key="index" data-device-id="{{item.deviceId}}" data-name="{{item.name || item.localName}}" bindtap="createBLEConnection" class="device_item" hover-class="device_item_hover">
+          <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+          <view style="font-size: 10px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+          <view style="font-size: 10px">UUID: {{item.deviceId}}</view>
+          <view style="font-size: 10px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+
+<!--分割线-->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
+<!--LOGO-->
+<view class="Logo_text">HexSeed</view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>

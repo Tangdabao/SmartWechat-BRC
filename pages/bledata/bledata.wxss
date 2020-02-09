@@ -1,0 +1,340 @@
+/**index.wxss**/
+.container_BATTERY {
+  margin: 5pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: rgb(143, 143, 143);
+}
+
+.container_BLEstatus {
+  margin: 5pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: rgb(143, 143, 143);
+}
+
+.container_BLEstatus_text {
+  justify-content: flex-start;
+  align-self: flex-start;
+}
+
+.container_Temperature {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  font-family: unset;
+  color: rgb(85, 85, 85);
+}
+
+.item_sheshidu {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-self: flex-start;
+  margin: 5pt;
+}
+
+.item_pic {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 5pt;
+}
+
+.container_LED {
+  height: 100%;
+  width: auto;
+  padding: 30rpx 70rpx;
+  display: flex;
+justify-content: flex-start;
+  align-items: center;
+  font-size: 16px;
+  font-family: unset;
+  color: rgb(85, 85, 85);
+}
+
+.section__title {
+  height: 100%;
+  width: auto;
+  padding: 30rpx 70rpx;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  font-size: 16px;
+  font-family: unset;
+  color: rgb(85, 85, 85);
+}
+
+.body-view {
+  height: 100%;
+  width: auto;
+  padding: 0rpx 70rpx;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+
+.container_SendArea {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+.textSendTitle{
+  display: flex;
+  padding: 70rpx 0rpx 0rpx 70rpx;
+  align-self: left;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+
+.textReceiveTitle{
+  display: flex;
+  padding: 70rpx 0rpx 0rpx 70rpx;
+  align-self: left;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+
+.container_ReceiveArea {
+  height:100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+
+.section_sendText, .section_reviceText {
+  width: 80%;
+  height: 60px;
+  margin: 20rpx;
+  padding: 10rpx 10rpx 10rpx 10rpx;
+  display: flex;
+  background-color: rgb(230, 230, 230);
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  font-size: 30rpx;
+  color: #353535;
+  line-height: 1em;
+}
+
+.container_SendButton {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  font-size: 16px;
+}
+
+.clr_Receive {
+  width: 280px;
+  border-radius: 3px;
+  margin: 0px auto;
+  padding-top: 2px;
+  font-size: 14px;
+  height: 40px;
+}
+
+.Logo_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  color: #d4d4d4;
+}
+
+.setDisabled {
+  width: 80px;
+  height: 30px;
+  border-radius: 0px;
+  padding-top: 2px;
+  font-size: 16px;
+  color: #d4d4d4;
+  background-color: #fff;
+}
+
+.page-body-info {
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.devices_summary {
+  padding: 10rpx;
+  font-size: 30rpx;
+}
+.device_list {
+  height: 300rpx;
+  border-radius: 5rpx;
+  flex: 1;
+}
+
+.device_item {
+  border-bottom: 1rpx solid #EEE;
+  padding: 10rpx;
+  color: #666;
+}
+.device_item_hover {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ececec;
+  width: 80%;
+  margin-top: 50rpx;
+  margin-bottom: 20rpx;
+  height: 120rpx;
+  border-radius: 10rpx;
+  margin-left:10%;
+  margin-right:10%;
+}
+
+.textInput {
+  background-color: #fff;
+  width: 82%;
+  height: 80rpx;
+  color: #0b74ff;
+  padding: 12rpx 12rpx;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  line-height: 32rpx;
+  font-weight: normal;
+  box-lines: 1rpx 1rpx 1rpx 1rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  overflow: auto;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+}
+
+.touchArea_ReceiveICO {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12%;
+  background-color: #fff;
+}
+
+.hexArr {
+  width: 80%;
+  height: auto;
+  margin: 5rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0rpx 0;
+  padding-left:10%;
+  /* position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10000; */
+}
+
+
+.oneKeyHex {
+  font-size: 45rpx;
+  color: #353535;
+  height: 100rpx;
+  width: 95rpx;
+  text-align: center;
+  margin-right: 10rpx;
+  margin-bottom: 15rpx;
+  background-color: #ecedef;
+  //box-shadow: 0 1rpx 2rpx 0 #ccd2e3;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hexColor{
+  background-color: #ecedef;
+}
+.oneKeyPressHex {
+  font-size: 45rpx;
+  color: #353535;
+  height: 100rpx;
+  width: 95rpx;
+  text-align: center;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  background-color: #a9b1bb;
+  //box-shadow: 0 1rpx 2rpx 0 #ccd2e3;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oneKeyGrayHex {
+  font-size: 35rpx;
+  color: #353535;
+  height: 100rpx;
+  width: 95rpx;
+  text-align: center;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  background-color: #a9b1bb;
+  //box-shadow: 0 1rpx 2rpx 0 #ccd2e3;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oneKeyPressGrayHex {
+  background-color: #feffff;
+}
+
+.oneKeyWidthHex {
+  font-size: 35rpx;
+  width: 115rpx;
+}
+
+.oneKeyWidthHexAsc {
+  font-size: 35rpx;
+  width: 95rpx;
+}
+
+.oneKeyPressWidthHex {
+  background-color: #a9b1bb;
+}
+
+.oneKeyBlueHex {
+  color: #fff;
+  width: 180rpx;
+  font-size: 35rpx;
+  background-color: #0b74ff;
+}
+
+.oneKeyPressBlueHex {
+  color: #353535;
+  width: 180rpx;
+  background-color: #feffff;
+}
