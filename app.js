@@ -41,5 +41,12 @@ App({
     timerAutoBar: '',
     timesPack: 0,
     timesPackNow: 0,
+    messagePacket: [{
+      messageID:'',
+      messagetype:'',
+      messageTotalPacket:'',
+      messageCurrentPacket:'',
+      messagePayload:''
+    }],
   }
 })
