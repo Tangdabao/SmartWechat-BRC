@@ -169,8 +169,147 @@ function concatenate(resultConstructor, ...arrays) {
 }
 
 
+/**
+ * @brief  set2_4GWorkingMode:更改2.4G工作模式 
+ * @param  str:数据包
+ * @retval 小程序下行到BLE
+ */
+function set2_4GWorkingMode(str)
+{
+  //  add you code
 
 
+}
+
+/**
+ * @brief  readBLEDataParameters:读取BLE本身数据、工作模式、其他
+ * @param  str:数据包
+ * @retval BLE上行到小程序
+ */
+function readBLEDataParameters(str)
+{
+
+  console.log('readBLEDataParameters:')
+  console.log(str.length)
+  console.log('/----------/')
+  app.globalData.messagePacket.messagetype = str[0] + str[1];
+  app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
+  app.globalData.messagePacket.messageCurrentPacket = str[4] + str[5];
+  console.log(`电池电量0x${str[6]}${str[7]}${str[8]}${str[9]}`)
+
+  console.log(`电池电量百分比${str[10]}${str[11]}%`)
+
+  console.log(`2.4G工作状态${str[12]}${str[13]}`)
+  switch(str[12]+str[13])
+  {
+    case '00':
+      console.log('休眠')
+      break;
+
+    case '01':
+      console.log('接收')
+      break;
+
+    case '02':
+      console.log('发送')
+      break;  
+  } 
+  console.log(`2.4G地址: 0x${str[14]}${str[15]}:0x${str[16]}${str[17]}:0x${str[18]}${str[19]}:0x${str[20]}${str[21]}:0x${str[22]}${str[23]}`) 
+  console.log(`2.4G频道${str[11]}.${str[13]}`) 
+
+
+
+}
+
+/**
+ * @brief  packet2_4GTransmission:2.4G上下行数据解析
+ * @param  str:数据包
+ * @retval  问题：如果有两包数据，下一包数据是帧头帧尾+数据过来，还是单数据，那500ms延时是不是多余？？因为是自动已经拼包了的
+ */
+function packet2_4GTransmission(str)
+{
+  console.log('packet2_4GTransmission:')
+  console.log(str.length)
+  console.log('/----------/')
+  app.globalData.messagePacket.messagetype = str[0] + str[1];
+  app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
+  app.globalData.messagePacket.messageCurrentPacket = str[4] + str[5];
+  if (app.globalData.messagePacket.messagetype =='01')//数据上行
+  {
+
+  }
+  else if (app.globalData.messagePacket.messagetype == '02')//数据下行
+  {
+
+  }
+  else
+  {
+    console.log('无效数据包');
+  }
+}
+
+/**
+ * @brief  systemParameters:系统数据分析
+ * @param  str:数据包
+ * @retval 
+ */
+function systemParameters(str)
+{
+  console.log('systemParameters:')
+  console.log(str.length)
+  console.log('/----------/')
+  app.globalData.messagePacket.messagetype = str[0] + str[1];
+  app.globalData.messagePacket.messageTotalPacket =str[2]+str[3];
+  app.globalData.messagePacket.messageCurrentPacket = str[4]+str[5];
+  console.log(`硬件版本V${str[7]}.${str[9]}`) 
+  console.log(`软件版本V${str[11]}.${str[13]}`) 
+}
+
+
+
+/**
+ * @brief  cmdLineProcess:数据分析状态机
+ * @param  str:数据包
+ * @retval 
+ */
+function cmdLineProcess(str)
+{
+  console.log('cmdLineProcess:')
+  console.log(str.length)
+  console.log(str.substr(2, str.length - 2))
+  console.log('/----------/')
+  app.globalData.messagePacket.messageID = '02';//xiaoxiID
+  if ((str[0] + str[1]) == app.globalData.messagePacket.messageID)
+  {
+    switch (str[2] + str[3])
+    {
+      case '00'://系统参数
+        systemParameters(str.substr(2, str.length - 2));
+      break;
+      case '01'://射频数据透传上行
+        packet2_4GTransmission(str.substr(2, str.length - 2));
+        break;
+      case '02'://射频数据透传下行
+        packet2_4GTransmission(str.substr(2, str.length - 2));
+        break;
+      case '03'://更改2.4G的工作模式
+        //set2_4GWorkingMode(str.substr(2, str.length - 2));//数据下行
+        break;
+      case '04'://蓝牙自身运行数据上传
+        readBLEDataParameters(str.substr(2, str.length - 2));
+        break;
+
+      default:
+        console.log('Error');
+    }
+  }else
+  {
+    console.log('CMD ERROR');
+  }
+
+
+
+}
 /**时间回调函数 */
 function ms_Function_callback() {
   console.log("ms_Function_callback")
@@ -228,8 +367,10 @@ Page({
     that.setData({
       ConnectStats: "未连接"
     })
-
-
+    
+    //var testStr ='020001010102020200'
+    var testStr = '0204010101000000F0F0F0F0F000'
+    cmdLineProcess(testStr);
     //测试1s的定时器
     //delayTimer = setInterval(ms_Function_callback, 1000)
     //console.log("Start delay");
@@ -541,36 +682,46 @@ Page({
     //******获取读到的数据*******//
     wx.onBLECharacteristicValueChange(function(res) {
       //******读取透传数值，并上传*******//
-      //console.log('onBLECharacteristicValueChange');
-      //console.log(`characteristic ${res.characteristicId} has changed, now is ${res.value}`)
+     //************************************ */
+      console.log('/*****************/');
+      //const arrayBufferTest = new Uint8Array([2,0,1,1,1,2,2,2,0])
+      //if (testab2hex(arrayBufferTest) == testab2hex(res.value) )
+      //{
+      //  console.log('/*****************/');
+      //  console.log('OK');
+      //}
+      //var b = testab2hex(res.value);
+      //console.log(b.length);
+      //console.log(b[0]+b[1])
+      //console.log(typeof b)
+      //console.log('/*****************/');
+
+      //*************************************/
       //console.log(testab2hex(res.value))
       if (res.characteristicId == that.data.connectedDeviceReadChar) {
-        //console.log('that.data.connectedDeviceReadChar');
         clearTimeout(receivedataTimer);//数据进来之后先清除超时计数器
         receivedataTimer = setTimeout(function () {
           console.log("receiveTimeout_Function_callback")
+          cmdLineProcess(app.globalData.receivepack);
           that.setData({
-              receive_data: app.globalData.receivepack ,
+              receive_data: app.globalData.receivepack,
             });
           //如果其他地方不在调用，数据包清除
           app.globalData.receivepack = '';//数据包清零
-          app.globalData.receivepack.length = 0;//数据包清零
-
-        },3000);//设置超时计数器
+          //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
+        },300);//设置超时计数器
         console.log(testab2hex(res.value))
-        
         app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
         console.log(app.globalData.receivepack)
-
+   
         //that.setData({
         //  receive_data: app.globalData.receivepack ,
-        //});
-        
+        //});     
 
         if (app.globalData.receivepack.length >128)//如果数据超过最大128字节，数据清空
         {
           app.globalData.receivepack = '';
-          app.globalData.receivepack.length = 0;
+          //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
         }
       }
       //*********************//
