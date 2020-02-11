@@ -338,3 +338,8 @@ justify-content: flex-start;
   width: 180rpx;
   background-color: #feffff;
 }
+
+.button-sp-area{
+  margin: 0 auto;
+  width: 60%;
+}
