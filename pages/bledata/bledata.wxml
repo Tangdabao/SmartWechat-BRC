@@ -112,7 +112,7 @@
   </view>
   <view class='hexArr'>
     <view class="oneKeyHex hexColor" hover-class="oneKeyPressHex" hover-stay-time="50" wx:for="{{hexArr3}}" wx:key="" catchtap='hexTap' data-str="{{item}}">{{item}}</view>
-    <view class="oneKeyHex oneKeyBlueHex hexColor" hover-class="oneKeyPressBlueHex" hover-stay-time="50" wx:for="{{hexStr3}}" wx:key="" catchtap='chatinput' data-str="{{item}}">{{item}}</view>
+    <view class="oneKeyHex oneKeyBlueHex hexColor" hover-class="oneKeyPressBlueHex" hover-stay-time="50" wx:for="{{hexStr3}}" wx:key="" catchtap='chatInputToBle' data-str="{{item}}">{{item}}</view>
   </view>
 </view>
 
@@ -168,6 +168,31 @@
 <view class="container_space">
   <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
 </view>
+
+
+<!--测试按钮-->
+<view class="button-sp-area">
+  <button type="default" bindtap="readingGroupButton">群灯读取数据</button>
+</view>
+
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
+<view class="button-sp-area">
+  <button type="default" bindtap="readingGroupButton">单灯读取数据</button>
+</view>
+
+
+<!--分割线-->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
 
 <!--LOGO-->
 <view class="Logo_text">HexSeed</view>
