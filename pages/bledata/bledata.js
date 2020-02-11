@@ -11,8 +11,10 @@ const app = getApp()
 
 /* 全局变量存储区域 */
 var delayTimer = 1; //start 1s timer 1s的TimerID
-var sendataTimer = 2;//发送数据定时器
-var receivedataTimer = 3;//接收数据定时器
+var sendataTimer = 2; //发送数据定时器
+var receivedataTimer = 3; //接收数据定时器
+var delayTimeoutTimer = 4; //ms Timeout函数
+var readingGroupTimer = 5; //群灯读取超时ID
 var flag = true;
 var device_Rssi = -200;
 var isnotExist = true;
@@ -174,8 +176,7 @@ function concatenate(resultConstructor, ...arrays) {
  * @param  str:数据包
  * @retval 小程序下行到BLE
  */
-function set2_4GWorkingMode(str)
-{
+function set2_4GWorkingMode(str) {
   //  add you code
 
 
@@ -186,8 +187,7 @@ function set2_4GWorkingMode(str)
  * @param  str:数据包
  * @retval BLE上行到小程序
  */
-function readBLEDataParameters(str)
-{
+function readBLEDataParameters(str) {
 
   console.log('readBLEDataParameters:')
   console.log(str.length)
@@ -200,8 +200,7 @@ function readBLEDataParameters(str)
   console.log(`电池电量百分比${str[10]}${str[11]}%`)
 
   console.log(`2.4G工作状态${str[12]}${str[13]}`)
-  switch(str[12]+str[13])
-  {
+  switch (str[12] + str[13]) {
     case '00':
       console.log('休眠')
       break;
@@ -212,10 +211,10 @@ function readBLEDataParameters(str)
 
     case '02':
       console.log('发送')
-      break;  
-  } 
-  console.log(`2.4G地址: 0x${str[14]}${str[15]}:0x${str[16]}${str[17]}:0x${str[18]}${str[19]}:0x${str[20]}${str[21]}:0x${str[22]}${str[23]}`) 
-  console.log(`2.4G频道${str[11]}.${str[13]}`) 
+      break;
+  }
+  console.log(`2.4G地址: 0x${str[14]}${str[15]}:0x${str[16]}${str[17]}:0x${str[18]}${str[19]}:0x${str[20]}${str[21]}:0x${str[22]}${str[23]}`)
+  console.log(`2.4G频道${str[11]}.${str[13]}`)
 
 
 
@@ -226,24 +225,23 @@ function readBLEDataParameters(str)
  * @param  str:数据包
  * @retval  问题：如果有两包数据，下一包数据是帧头帧尾+数据过来，还是单数据，那500ms延时是不是多余？？因为是自动已经拼包了的
  */
-function packet2_4GTransmission(str)
-{
+function packet2_4GTransmission(str) {
   console.log('packet2_4GTransmission:')
   console.log(str.length)
   console.log('/----------/')
   app.globalData.messagePacket.messagetype = str[0] + str[1];
   app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
   app.globalData.messagePacket.messageCurrentPacket = str[4] + str[5];
-  if (app.globalData.messagePacket.messagetype =='01')//数据上行
+
+  if (app.globalData.messagePacket.messagetype == '01') //数据上行
+  {
+    //if (app.globalData.messagePacket.messageID)消息ID未处理
+      app.globalData.receivepack = app.globalData.receivepack.concat(str.substr(6,(str.length-6)));
+      console.log(app.globalData.receivepack);
+  } else if (app.globalData.messagePacket.messagetype == '02') //数据下行
   {
 
-  }
-  else if (app.globalData.messagePacket.messagetype == '02')//数据下行
-  {
-
-  }
-  else
-  {
+  } else {
     console.log('无效数据包');
   }
 }
@@ -253,18 +251,16 @@ function packet2_4GTransmission(str)
  * @param  str:数据包
  * @retval 
  */
-function systemParameters(str)
-{
+function systemParameters(str) {
   console.log('systemParameters:')
   console.log(str.length)
   console.log('/----------/')
   app.globalData.messagePacket.messagetype = str[0] + str[1];
-  app.globalData.messagePacket.messageTotalPacket =str[2]+str[3];
-  app.globalData.messagePacket.messageCurrentPacket = str[4]+str[5];
-  console.log(`硬件版本V${str[7]}.${str[9]}`) 
-  console.log(`软件版本V${str[11]}.${str[13]}`) 
+  app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
+  app.globalData.messagePacket.messageCurrentPacket = str[4] + str[5];
+  console.log(`硬件版本V${str[7]}.${str[9]}`)
+  console.log(`软件版本V${str[11]}.${str[13]}`)
 }
-
 
 
 /**
@@ -272,43 +268,38 @@ function systemParameters(str)
  * @param  str:数据包
  * @retval 
  */
-function cmdLineProcess(str)
-{
+function cmdLineProcess(str) {
   console.log('cmdLineProcess:')
   console.log(str.length)
   console.log(str.substr(2, str.length - 2))
   console.log('/----------/')
-  app.globalData.messagePacket.messageID = '02';//xiaoxiID
-  if ((str[0] + str[1]) == app.globalData.messagePacket.messageID)
-  {
-    switch (str[2] + str[3])
-    {
-      case '00'://系统参数
-        systemParameters(str.substr(2, str.length - 2));
+  app.globalData.messagePacket.messageID = str[0] + str[1];
+  //if ((str[0] + str[1]) == app.globalData.messagePacket.messageID)//删除此处，不需要判断消息ID Data：20200211
+  //{
+  switch (str[2] + str[3]) {
+    case '00': //系统参数
+      systemParameters(str.substr(2, str.length - 2));
       break;
-      case '01'://射频数据透传上行
-        packet2_4GTransmission(str.substr(2, str.length - 2));
-        break;
-      case '02'://射频数据透传下行
-        packet2_4GTransmission(str.substr(2, str.length - 2));
-        break;
-      case '03'://更改2.4G的工作模式
-        //set2_4GWorkingMode(str.substr(2, str.length - 2));//数据下行
-        break;
-      case '04'://蓝牙自身运行数据上传
-        readBLEDataParameters(str.substr(2, str.length - 2));
-        break;
+    case '01': //射频数据透传上行
+      packet2_4GTransmission(str.substr(2, str.length - 2));
+      break;
+    case '02': //射频数据透传下行
+      packet2_4GTransmission(str.substr(2, str.length - 2));
+      break;
+    case '03': //更改2.4G的工作模式
+      //set2_4GWorkingMode(str.substr(2, str.length - 2));//数据下行
+      break;
+    case '04': //蓝牙自身运行数据上传
+      readBLEDataParameters(str.substr(2, str.length - 2));
+      break;
 
-      default:
-        console.log('Error');
-    }
-  }else
-  {
-    console.log('CMD ERROR');
+    default:
+      console.log('Error');
   }
-
-
-
+  //}else
+  //{
+  //  console.log('CMD ERROR');
+  //}
 }
 /**时间回调函数 */
 function ms_Function_callback() {
@@ -367,10 +358,22 @@ Page({
     that.setData({
       ConnectStats: "未连接"
     })
-    
+
     //var testStr ='020001010102020200'
-    var testStr = '0204010101000000F0F0F0F0F000'
+    //var testStr = '0204010101000000F0F0F0F0F000'
+    var testStr = '010102011234567890'
     cmdLineProcess(testStr);
+
+    var testStr = '010102021234567890'
+    cmdLineProcess(testStr);
+
+    var testStr = '020102011234567890'
+    cmdLineProcess(testStr);
+
+    var testStr = '020102021234567890'
+    cmdLineProcess(testStr);
+
+
     //测试1s的定时器
     //delayTimer = setInterval(ms_Function_callback, 1000)
     //console.log("Start delay");
@@ -679,11 +682,18 @@ Page({
 
     //*********************//
     //******读取数据*******//
-    //******获取读到的数据*******//
+    /**
+     * @brief  wx.onBLECharacteristicValueChange：获取读到的数据
+     * @param  无
+     * @retval 暂时废弃
+     * @data  20200211
+     */
     wx.onBLECharacteristicValueChange(function(res) {
       //******读取透传数值，并上传*******//
-     //************************************ */
-      console.log('/*****************/');
+      //************************************ */
+      //群灯读取到数据清除计数器
+      that.readingGroupClearStatus();
+      //console.log('/*****************/');
       //const arrayBufferTest = new Uint8Array([2,0,1,1,1,2,2,2,0])
       //if (testab2hex(arrayBufferTest) == testab2hex(res.value) )
       //{
@@ -697,33 +707,47 @@ Page({
       //console.log('/*****************/');
 
       //*************************************/
-      //console.log(testab2hex(res.value))
+///*
+      //20200211暂时屏蔽，用于实际项目中使用
       if (res.characteristicId == that.data.connectedDeviceReadChar) {
-        clearTimeout(receivedataTimer);//数据进来之后先清除超时计数器
-        receivedataTimer = setTimeout(function () {
+        app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
+        cmdLineProcess(app.globalData.receivepack);
+
+      }
+//*/
+
+
+/*
+      20200211暂时屏蔽，用于接收区域整个Packet数据包显示
+
+      if (res.characteristicId == that.data.connectedDeviceReadChar) {
+        clearTimeout(receivedataTimer); //数据进来之后先清除超时计数器
+        receivedataTimer = setTimeout(function() {
           console.log("receiveTimeout_Function_callback")
           cmdLineProcess(app.globalData.receivepack);
           that.setData({
-              receive_data: app.globalData.receivepack,
-            });
+            receive_data: app.globalData.receivepack,
+          });
           //如果其他地方不在调用，数据包清除
-          app.globalData.receivepack = '';//数据包清零
+          app.globalData.receivepack = ''; //数据包清零
           //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
-        },300);//设置超时计数器
+        }, 300); //设置超时计数器
         console.log(testab2hex(res.value))
         app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
         console.log(app.globalData.receivepack)
-   
+
         //that.setData({
         //  receive_data: app.globalData.receivepack ,
         //});     
 
-        if (app.globalData.receivepack.length >128)//如果数据超过最大128字节，数据清空
+        if (app.globalData.receivepack.length > 128) //如果数据超过最大128字节，数据清空
         {
           app.globalData.receivepack = '';
           //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
         }
       }
+
+*/
       //*********************//
     })
   },
@@ -748,8 +772,12 @@ Page({
   },
   //*********************//
 
-
-  //******发送需要的数据*******//
+  /**
+   * @brief  chatinput：输入框数据传输到BLE
+   * @param  无
+   * @retval 暂时废弃
+   * @data  20200211
+   */
   chatinput: function(e) {
     let temp_data = this.data.send_data;
     let countTx = this.data.countTx;
@@ -785,8 +813,12 @@ Page({
   },
   //*********************//
 
-
-  /****写HEX数据到蓝牙*******/
+  /**
+   * @brief  writeHEXDatatoBLE:用于全局数据缓存、传送
+   * @param  无
+   * @retval 暂时废弃
+   * @data  20200211
+   */
   writeHEXDatatoBLE: function(e) {
     var that = this;
     app.globalData.timesPack--;
@@ -813,10 +845,76 @@ Page({
   },
 
 
-  //*********************//
+  /**
+   * @brief  chatInputToBle:输入窗口数据送到Ble
+   * @param  str
+   * @retval 输入数据为 全局的send_data
+   * @data  20200211
+   */
+  chatInputToBle: function(e) {
+    let temp_data = this.data.send_data.replace(/\s*/g, "");
 
-  //*********************//
-  //******关闭蓝牙*******//
+    console.log('temp_data', temp_data);
+    console.log('temp_data.length', temp_data.length);
+
+    this.sendBleDataPacket(temp_data);
+
+  },
+
+
+  /**
+   * @brief  sendBleData:蓝牙数据发送函数
+   * @param  待发送数据：str
+   * @retval 
+   * @data  20200211
+   */
+  sendBleData: function(str) {
+    var that = this;
+    wx.writeBLECharacteristicValue({
+      deviceId: that.data.connectedDeviceId,
+      serviceId: that.data.connectedDeviceserviceId,
+      characteristicId: that.data.connectedDeviceWriteChar,
+      value: stringtoHex(str),
+      success: (res) => {
+        console.log(' wx.writeBLECharacteristicValue success', res)
+      },
+      fail: (res) => {
+        console.log(' wx.writeBLECharacteristicValue fail', res)
+      },
+      complete: (res) => {
+        console.log(' wx.writeBLECharacteristicValue complete', res)
+      }
+    })
+  },
+
+
+  /**
+   * @brief  sendBleDataPacket:蓝牙数据包发送函数
+   * @param  待发送数据：str
+   * @retval 
+   * @data  20200211
+   */
+  sendBleDataPacket: function(str) {
+    var that = this;
+    console.log('str.length', str.length);
+    if (str.length < 40) {
+      that.sendBleData(str.substr(0, str.length));
+    } else {
+
+      for (let i = 0; i < (str.length / 40); i++) {
+        that.sendBleData(str.substr(i * 40, 40));
+      }
+
+      that.sendBleData(str.substr((str.length / 40) * 40, str.length % 40));
+    }
+  },
+
+  /**
+   * @brief  CloseBlefun:关闭蓝牙，由WXml直接调用
+   * @param  无
+   * @retval 
+   * @data  20200211
+   */
   CloseBlefun: function(e) {
     var that = this;
     console.log('CloseBlefun')
@@ -922,5 +1020,59 @@ Page({
       countTxFrame: 0,
     })
     console.log(send_data)
+  },
+
+  //*********测试按钮************//
+  /**
+   * @brief  readingGroupButton:读取群灯回调函数
+   * @param  无
+   * @retval 
+   * @data  20200211
+   */
+  readingGroupButton: function(e) {
+    var that = this;
+
+    //var testBuff = "79797979797979797979797979797979797979797979797979797979797979797979797979797979797979"
+    var set2_4SendModeBuff = "0102010102123456789000000000000000000000"
+    console.log('set2_4SendModeBuff.length', set2_4SendModeBuff.length);
+    that.sendBleDataPacket(set2_4SendModeBuff);
+
+    delayTimeoutTimer = setTimeout(function() {
+      clearTimeout(delayTimeoutTimer);
+      var read2_4GDataBuff = "01010201FF123456789000010BFF000000000000010102020000000000000000000000000000000"
+      console.log('testBuff.length', read2_4GDataBuff.length);
+      that.sendBleDataPacket(read2_4GDataBuff);
+
+
+      delayTimeoutTimer = setTimeout(function() {
+        clearTimeout(delayTimeoutTimer);
+        var set2_4ReceiveModeBuff = "0103010101123456789000000000000000000000"
+        console.log('set2_4ReceiveModeBuff.length', set2_4ReceiveModeBuff.length);
+        that.sendBleDataPacket(set2_4ReceiveModeBuff);
+        if (app.globalData.timeCount > 1) {
+          clearTimeout(readingGroupTimer);
+          app.globalData.timeCount = 0;
+        } else {
+          readingGroupTimer = setTimeout(function() {
+            console.log(app.globalData.timeCount);
+            app.globalData.timeCount++;
+            that.readingGroupButton();
+          }, 800)
+        }
+      }, 50)
+    }, 50)
+  },
+
+  /**
+   * @brief  readingGroupClearStatus:清除读取群灯超时定时器与状态
+   * @param  无
+   * @retval 
+   * @data  20200211
+   */
+  readingGroupClearStatus: function() {
+    clearTimeout(readingGroupTimer);
+    app.globalData.timeCount = 0;
   }
+
+
 })
