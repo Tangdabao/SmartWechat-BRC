@@ -143,6 +143,30 @@
 
 
 <text class="textSendTitle">2.4G device：</text>
+<view class="textSendTitle">已发现 {{device_RF_Num}} 个路灯控制器：</view>
+
+<view class="textTitle">型号： {{equipmentModel}} </view>
+<view class="textTitle">电池电压： {{batteryVoltage}}mV</view>
+<view class="textTitle">电池容量： {{batteryCapacity}}%</view>
+<view class="textTitle">电池温度： {{batteryTemperature}}℃</view>
+<view class="textTitle">电池充电温度: {{batteryChargingTemperature}}℃</view>
+<view class="textTitle">光板电压: {{lightBoardVoltage}}mV</view>
+<view class="textTitle">光板功率: {{lightBoardPower}}% </view>
+<view class="textTitle">负载电压: {{loadVoltage}}mV</view>
+<view class="textTitle">负载亮度: {{loadBrightness}}% </view>
+<view class="textTitle">负载功率: {{loadPower}}mV</view>
+<view class="textTitle">充电PWM: {{chargePWM}}% </view>
+<view class="textTitle">放电PWM: {{dischargePWM}}mV</view>
+<view class="textTitle">运行天数: {{daysOfOperation}}% </view>
+<view class="textTitle">断电次数: {{powerOffTimes}}mV</view>
+<view class="textTitle">模式修改次数: {{modificationTimes}}% </view>
+
+<view class="container_space">
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+</view>
+
+
+<!--路灯控制器列表>
 <view class="page-body">
   <view class="page-section">
     <view class="page-body-info">
@@ -182,6 +206,8 @@
 <view class="button-sp-area">
   <button type="default" bindtap="readingGroupButton">单灯读取数据</button>
 </view>
+
+
 
 
 <!--分割线-->
