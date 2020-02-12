@@ -226,24 +226,51 @@ function readBLEDataParameters(str) {
  * @retval  问题：如果有两包数据，下一包数据是帧头帧尾+数据过来，还是单数据，那500ms延时是不是多余？？因为是自动已经拼包了的
  */
 function packet2_4GTransmission(str) {
-  console.log('packet2_4GTransmission:')
-  console.log(str.length)
-  console.log('/----------/')
-  app.globalData.messagePacket.messagetype = str[0] + str[1];
-  app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
-  app.globalData.messagePacket.messageCurrentPacket = str[4] + str[5];
+  console.log('packet2_4GTransmission:');
+  console.log(str.length);
+  console.log('/----------/');
+
+  app.globalData.messagePacket.messagetype = str[2] + str[3];
+  app.globalData.messagePacket.messageTotalPacket = str[4] + str[5];
+  app.globalData.messagePacket.messageCurrentPacket = str[6] + str[7];
 
   if (app.globalData.messagePacket.messagetype == '01') //数据上行
   {
     //if (app.globalData.messagePacket.messageID)消息ID未处理
-      app.globalData.receivepack = app.globalData.receivepack.concat(str.substr(6,(str.length-6)));
-      console.log(app.globalData.receivepack);
+    if (app.globalData.messagePacket.messageCurrentPacket == '01') //如果是第一包数据
+    {
+      app.globalData.receivepack = str.substr(8, (str.length - 8))
+      app.globalData.messagePacket.messageID = str[0] + str[1];
+    } else {
+      // 第二包或者第三包
+      if (app.globalData.messagePacket.messageID == (str[0] + str[1])) //判断与之前ID是否相等
+      {
+        //同一ID的第二包、第三包
+        app.globalData.receivepack = app.globalData.receivepack.concat(str.substr(8, (str.length - 8)));
+
+        if (app.globalData.messagePacket.messageTotalPacket == app.globalData.messagePacket.messageCurrentPacket) //如果当前包数等于总包数，此次接收结束
+        {
+          console.log('上行数据');
+          console.log(app.globalData.receivepack);
+        }
+
+      } else {
+
+        console.log('ID 错误');
+
+      }
+    }
+
   } else if (app.globalData.messagePacket.messagetype == '02') //数据下行
   {
 
   } else {
     console.log('无效数据包');
   }
+
+
+
+
 }
 
 /**
@@ -254,6 +281,7 @@ function packet2_4GTransmission(str) {
 function systemParameters(str) {
   console.log('systemParameters:')
   console.log(str.length)
+  console.log(str)
   console.log('/----------/')
   app.globalData.messagePacket.messagetype = str[0] + str[1];
   app.globalData.messagePacket.messageTotalPacket = str[2] + str[3];
@@ -270,10 +298,8 @@ function systemParameters(str) {
  */
 function cmdLineProcess(str) {
   console.log('cmdLineProcess:')
-  console.log(str.length)
-  console.log(str.substr(2, str.length - 2))
   console.log('/----------/')
-  app.globalData.messagePacket.messageID = str[0] + str[1];
+
   //if ((str[0] + str[1]) == app.globalData.messagePacket.messageID)//删除此处，不需要判断消息ID Data：20200211
   //{
   switch (str[2] + str[3]) {
@@ -281,10 +307,10 @@ function cmdLineProcess(str) {
       systemParameters(str.substr(2, str.length - 2));
       break;
     case '01': //射频数据透传上行
-      packet2_4GTransmission(str.substr(2, str.length - 2));
+      packet2_4GTransmission(str); //修改输入参数
       break;
     case '02': //射频数据透传下行
-      packet2_4GTransmission(str.substr(2, str.length - 2));
+      packet2_4GTransmission(str); //
       break;
     case '03': //更改2.4G的工作模式
       //set2_4GWorkingMode(str.substr(2, str.length - 2));//数据下行
@@ -303,7 +329,9 @@ function cmdLineProcess(str) {
 }
 /**时间回调函数 */
 function ms_Function_callback() {
+
   console.log("ms_Function_callback")
+
 }
 /******************/
 Page({
@@ -335,6 +363,21 @@ Page({
 
     //-----2.4G---------//
     device_RF_Num: 0,
+    equipmentModel: "SY-LD-40 ",
+    batteryVoltage: 0,
+    batteryCapacity: 0,
+    batteryTemperature: 0,
+    batteryChargingTemperature: 0,
+    lightBoardVoltage: 0,
+    lightBoardPower: 0,
+    loadVoltage: 0,
+    loadBrightness: 0,
+    loadPower: 0,
+    chargePWM: 0,
+    dischargePWM: 0,
+    daysOfOperation: 0,
+    powerOffTimes: 0,
+    modificationTimes: 0,
 
     //-----hex Input ------------//
     hexArr1: ["0", "1", "2", "3", "4", "5", "6"],
@@ -707,47 +750,47 @@ Page({
       //console.log('/*****************/');
 
       //*************************************/
-///*
+      ///*
       //20200211暂时屏蔽，用于实际项目中使用
       if (res.characteristicId == that.data.connectedDeviceReadChar) {
         app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
         cmdLineProcess(app.globalData.receivepack);
 
       }
-//*/
+      //*/
 
 
-/*
-      20200211暂时屏蔽，用于接收区域整个Packet数据包显示
+      /*
+            20200211暂时屏蔽，用于接收区域整个Packet数据包显示
 
-      if (res.characteristicId == that.data.connectedDeviceReadChar) {
-        clearTimeout(receivedataTimer); //数据进来之后先清除超时计数器
-        receivedataTimer = setTimeout(function() {
-          console.log("receiveTimeout_Function_callback")
-          cmdLineProcess(app.globalData.receivepack);
-          that.setData({
-            receive_data: app.globalData.receivepack,
-          });
-          //如果其他地方不在调用，数据包清除
-          app.globalData.receivepack = ''; //数据包清零
-          //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
-        }, 300); //设置超时计数器
-        console.log(testab2hex(res.value))
-        app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
-        console.log(app.globalData.receivepack)
+            if (res.characteristicId == that.data.connectedDeviceReadChar) {
+              clearTimeout(receivedataTimer); //数据进来之后先清除超时计数器
+              receivedataTimer = setTimeout(function() {
+                console.log("receiveTimeout_Function_callback")
+                cmdLineProcess(app.globalData.receivepack);
+                that.setData({
+                  receive_data: app.globalData.receivepack,
+                });
+                //如果其他地方不在调用，数据包清除
+                app.globalData.receivepack = ''; //数据包清零
+                //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
+              }, 300); //设置超时计数器
+              console.log(testab2hex(res.value))
+              app.globalData.receivepack = app.globalData.receivepack.concat(testab2hex(res.value))
+              console.log(app.globalData.receivepack)
 
-        //that.setData({
-        //  receive_data: app.globalData.receivepack ,
-        //});     
+              //that.setData({
+              //  receive_data: app.globalData.receivepack ,
+              //});     
 
-        if (app.globalData.receivepack.length > 128) //如果数据超过最大128字节，数据清空
-        {
-          app.globalData.receivepack = '';
-          //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
-        }
-      }
+              if (app.globalData.receivepack.length > 128) //如果数据超过最大128字节，数据清空
+              {
+                app.globalData.receivepack = '';
+                //app.globalData.receivepack.length = 0;//删除20200209 不能直接给Length赋值
+              }
+            }
 
-*/
+      */
       //*********************//
     })
   },
@@ -1073,6 +1116,4 @@ Page({
     clearTimeout(readingGroupTimer);
     app.globalData.timeCount = 0;
   }
-
-
 })
