@@ -1,0 +1,57 @@
+<!--pages/batterymode/batterymode.wxml-->
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">电池类型</view>
+    <radio-group name="w_batteryType">
+      <label>
+        <radio value="radio1" />磷酸铁锂</label>
+      <label>
+        <radio value="radio2" />三元锂电</label>
+    </radio-group>
+  </view>
+
+  <view class="section">
+    <view class="section__title">电池串数 ：{{batteryStrings}}</view>
+    <input name="input" type="number" placeholder="please input here" />
+  </view>
+
+  <view class="section">
+    <view class="section__title">标准电压：{{standardVoltage}}</view>
+    <input name="input1" type="number" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">充点返回电压：{{chargePointReturnVoltage}}</view>
+    <input name="input2" type="number" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">过放返回电压：{{overDischargeReturnVoltage}}</view>
+    <input name="input3" type="number" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">过放电压：{{overDischargeVoltage}}</view>
+    <input name="input4" type="number" placeholder="please input here" />
+  </view>
+
+  <view class="section">
+    <view class="section__title">降功开始：{{startOfPowerReduction}}</view>
+    <input name="input5" type="number" placeholder="please input here" />
+  </view>
+
+  <view class="section">
+    <view class="section__title">续航电压：{{enduranceVoltage}}</view>
+    <input name="input6" type="number" placeholder="please input here" />
+  </view>
+  
+    <view class="section">
+    <view class="section__title">电池高温：{{batteryHighTemperature}}</view>
+    <input name="input7" type="number" placeholder="please input here" />
+  </view>
+    <view class="section">
+    <view class="section__title">电池低温：{{batteryLowTemperature}}</view>
+    <input name="input8" type="number" placeholder="please input here" />
+  </view>
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
