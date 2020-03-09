@@ -11,5 +11,9 @@ Page({
         return util.formatTime(new Date(log))
       })
     })
+  },
+  onShow: function () {
+    var timestamp = util.formatTime(new Date());
+    console.log(timestamp)
   }
 })
