@@ -1,0 +1,43 @@
+.textSendTitle {
+  display: flex;
+  padding: 70rpx 0rpx 0rpx 70rpx;
+  align-self: left;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}
+
+.page-body-info {
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.devices_summary {
+  padding: 10rpx;
+  font-size: 30rpx;
+}
+
+.device_list {
+  height: 300rpx;
+  border-radius: 5rpx;
+  flex: 1;
+}
+
+.device_item {
+  border-bottom: 1rpx solid #eee;
+  padding: 10rpx;
+  color: #666;
+}
+
+.device_item_hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.textTitle {
+  display: flex;
+  padding: 10rpx 0rpx 0rpx 70rpx;
+  align-self: left;
+  font-family: unset;
+  font-size: 16px;
+  color: rgb(85, 85, 85);
+}

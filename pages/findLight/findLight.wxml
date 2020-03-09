@@ -1,0 +1,28 @@
+<text class="textSendTitle">2.4G device：</text>
+<view class="page-body-info">
+  <view class="devices_summary">已发现 {{device_RF_Num}} 个路灯控制器：</view>
+  <scroll-view class="device_list" scroll-y scroll-with-animation>
+    <view wx:for="{{device_RF_Num}}" wx:key="index" data-device-id="{{item.deviceId}}" data-name="{{item.name || item.localName}}" bindtap="createBLEConnection" class="device_item" hover-class="device_item_hover">
+      <view style="font-size: 16px; color: #333;">{{equipmentModel}}</view>
+      <view style="font-size: 10px">电池电压： {{batteryVoltage}}mV</view>
+      <view style="font-size: 10px">电池容量： {{batteryCapacity}}%</view>
+      <view style="font-size: 10px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+    </view>
+  </scroll-view>
+</view>
+
+
+<view class="textTitle">电池电压： {{batteryVoltage}}mV</view>
+<view class="textTitle">电池容量： {{batteryCapacity}}%</view>
+<view class="textTitle">电池温度： {{batteryTemperature}}℃</view>
+<view class="textTitle">电池充电温度: {{batteryChargingTemperature}}℃</view>
+<view class="textTitle">光板电压: {{lightBoardVoltage}}mV</view>
+<view class="textTitle">光板功率: {{lightBoardPower}}% </view>
+<view class="textTitle">负载电压: {{loadVoltage}}mV</view>
+<view class="textTitle">负载亮度: {{loadBrightness}}% </view>
+<view class="textTitle">负载功率: {{loadPower}}mV</view>
+<view class="textTitle">充电PWM: {{chargePWM}}% </view>
+<view class="textTitle">放电PWM: {{dischargePWM}}mV</view>
+<view class="textTitle">运行天数: {{daysOfOperation}}% </view>
+<view class="textTitle">断电次数: {{powerOffTimes}}mV</view>
+<view class="textTitle">模式修改次数: {{modificationTimes}}% </view>
