@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/bledata/bledata"
+    "pages/index/index"
+  
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -49,5 +49,38 @@ App({
       messageCurrentPacket:'',
       messagePayload:''
     }],
+    //------BLE-------------//
+    g_connectedDeviceId: "", //被连接BLE MAC
+    g_disconnectedDeviceId: "", //断开连接BLE MAC
+    g_connectedDeviceserviceId: "", ///连接设备服务UUID
+    g_connectedDeviceReadChar: "",
+    g_connectedDeviceWriteChar: "",
+
+    //------2.4g-----------//
+    deviceMac: "1234567890",
+    deviceNum:0,
+    //------battery-------//
+    g_batteryType:'',//电池类型
+    g_batteryStrings: '',//电池串数
+    g_standardVoltage: '',//标准电压
+    g_chargePointReturnVoltage: '',//充点返回电压
+    g_overDischargeReturnVoltage: '',//过放返回电压
+    g_overDischargeVoltage: '',//过放电压
+    g_startOfPowerReduction: '',//降功开始：
+    g_enduranceVoltage: '',// 续航电压：
+    g_batteryHighTemperature: '',//电池高温
+    g_batteryLowTemperature: '',//电池低温
+
+    //------LightMode-------//
+    g_turnOnVoltage: '',//开灯电压
+    g_powerReduction: '',//降功幅度
+    g_onDelay: '',//开灯延时
+    g_endurancePower: '',//续航功率
+
   }
 })
+
+
+function checkSumFunctionT1(str) {
+  console.log('Ceshi')
+}
