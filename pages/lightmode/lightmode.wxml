@@ -1,0 +1,256 @@
+<!--T1时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section__title">T1时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT1Period[indexT1].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT1Period[indexT1].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT1Period[indexT1].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT1Period[indexT1].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+    <view class="btn-area">
+      <button formType="submit">参数保存</button>
+      <button formType="reset">参数复位</button>
+    </view>
+</form>
+
+<!----------------------------------------------------------------------------------------------------->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+
+
+<!--T2时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT2" bindreset="formResetT2">
+  <view class="section__title">T2时段</view>
+    <view class="section">
+    <view class="section__title">时长：{{timeT2Period[indexT2].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT2Period[indexT2].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT2Period[indexT2].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT2Period[indexT2].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+<!----------------------------------------------------------------------------------------------------->
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+
+
+<!--T3时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT3" bindreset="formResetT3">
+  <view class="section__title">T3时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT3Period[indexT3].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT3Period[indexT3].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT3Period[indexT3].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT3Period[indexT3].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<!--T4时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT4" bindreset="formResetT4">
+  <view class="section__title">T4时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT4Period[indexT4].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT4Period[indexT4].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT4Period[indexT4].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT4Period[indexT4].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<!--T5时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT5" bindreset="formResetT5">
+  <view class="section__title">T5时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT5Period[indexT5].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT5Period[indexT5].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT5Period[indexT5].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT5Period[indexT5].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+<!--T6时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT6" bindreset="formResetT6">
+  <view class="section__title">T6时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT6Period[indexT6].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT6Period[indexT6].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT6Period[indexT6].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT6Period[indexT6].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+<!--T7时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT7" bindreset="formResetT7">
+  <view class="section__title">T7时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{timeT7Period[indexT7].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{timeT7Period[indexT7].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{timeT7Period[indexT7].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{timeT7Period[indexT7].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+<!--晨亮时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT8" bindreset="formResetT8">
+  <view class="section__title">晨亮时段</view>
+  <view class="section">
+    <view class="section__title">时长：{{morningLight[indexT8].duration}}<!--此處加數組標號   大坑-->
+    </view>
+      <input name="duration" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">功率：{{morningLight[indexT8].power}}</view>
+      <input name="power" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">感应：{{morningLight[indexT8].induction}}</view>
+      <input name="induction" placeholder="please input here" />
+    </view>
+    <view class="section">
+      <view class="section__title">休眠：{{morningLight[indexT8].dormant}}</view>
+      <input name="dormant" placeholder="please input here" />
+    </view>
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
+
+<view style="width:83%;height:1px; background:#E0E0E0;margin-left:60rpx;"></view>
+
+<!--T9时间段内容--------------------------------------------------------------------------------------------------->
+<form bindsubmit="formSubmitT9" bindreset="formResetT9">
+  <view class="section">
+    <view class="section__title">开灯电压:{{turnOnVoltage}}</view>
+    <input name="turnOnVoltage" placeholder="please input here" />
+  </view>
+
+  <view class="section">
+    <view class="section__title">降功幅度:{{powerReduction}}</view>
+    <input name="powerReduction" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">开灯延时:{{onDelay}}</view>
+    <input name="onDelay" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">续航功率:{{endurancePower}}</view>
+    <input name="endurancePower" placeholder="please input here" />
+  </view>
+
+
+  <view class="btn-area">
+    <button formType="submit">参数保存</button>
+    <button formType="reset">参数复位</button>
+  </view>
+</form>
