@@ -1,7 +1,13 @@
 {
   "pages": [
-    "pages/index/index"
-  
+    "pages/index/index",
+    "pages/bledata/bledata",
+    "pages/batterymode/batterymode",
+    "pages/common/common",
+    "pages/findLight/findLight",
+    "pages/lightmode/lightmode",
+    "pages/logs/logs",
+    "pages/setting/setting"
   ],
   "window": {
     "backgroundTextStyle": "light",
