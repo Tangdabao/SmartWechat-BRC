@@ -4,9 +4,9 @@
     <view class="section__title">电池类型</view>
     <radio-group name="w_batteryType">
       <label>
-        <radio value="radio1" />磷酸铁锂</label>
+        <radio value="01" />磷酸铁锂</label>
       <label>
-        <radio value="radio2" />三元锂电</label>
+        <radio value="02" />三元锂电</label>
     </radio-group>
   </view>
 
