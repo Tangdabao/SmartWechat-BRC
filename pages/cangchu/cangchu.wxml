@@ -1,0 +1,6 @@
+<!--pages/cangchu/cangchu.wxml-->
+<view class="textTitle">成功数量: {{numberOfSuccess}}</view>
+<view class="textTitle">设置计时: {{timerSuccess}}S</view>
+
+
+
