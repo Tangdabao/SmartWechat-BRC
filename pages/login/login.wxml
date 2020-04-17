@@ -1,0 +1,36 @@
+
+<!-- 图片信息Log -->
+<view class='imagesize'>
+  <image style="margin:10px;" mode="aspectFit" src="../../image/lysign.jpg"></image>
+</view>
+
+<!-- 表单内容 -->
+  <view class="section">
+
+    <!-- 输入账号 -->
+    <input class='ccount' type="search" value='{{key}}' bindinput="bindKeyInput" placeholder="账号"/>
+    <a  wx:if="{{key}}" bindtap="eliminate" class="iconfont icon-guanbi"></a>
+    
+    <!-- 输入密码 -->
+    <view class="weui-cell">      
+      <view class="weui-cell__bd">        
+      <input password='{{isShowPassword}}' bindinput="bindPassInput" placeholder="密码" placeholder-class='placeholder_class'/> 
+      <span wx:if="{{!password}}" class="forget">忘记密码？</span>
+        <view class="weui-cell__ft get_qrcode" bindtap='toggleShowPassword'>  
+          <a  wx:if="{{password}}" bindtap="eliminate" class="forget">      
+            <view wx:if='{{isShowPassword}}' class='iconfont icon-yanjing-bi'></view>      
+            <view wx:if='{{!isShowPassword}}' class='iconfont icon-iconset0207'></view>    
+          </a>  
+        </view> 
+      </view>           
+    </view>
+  </view>
+  <!-- 登陆按钮 -->
+  <view class="btn-area">
+    <button bindtap="bindViewTap">登陆</button>
+  </view>
+  <!-- 注册连接 -->
+  <view class='foor'>
+    <span class="gray">还没有账号？</span>
+    <span class="register">去注册</span>
+  </view>
