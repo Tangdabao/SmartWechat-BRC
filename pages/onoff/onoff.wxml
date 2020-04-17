@@ -1,0 +1,2 @@
+<!--pages/onoff/onoff.wxml-->
+<view class="textTitle">开关灯命令已发送</view>
