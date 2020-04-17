@@ -1,0 +1,10 @@
+<!--pages/sysParameters/sysParameters.wxml-->
+<view class="textTitle">客户名称: {{customerName}}</view>
+<view class="textTitle">客户ID号: {{customerID}}</view>
+<view class="textTitle">客户组ID: {{customerGroupID}}</view>
+<view class="textTitle">剩余使用时长: {{remainTime}}min</view>
+<view class="textTitle">强制开关灯时长: {{forcedSwitchLightTime}}min</view>
+
+<view class="btn-area">
+    <button bindtap="setttingFun">使用帮助</button>
+  </view>
