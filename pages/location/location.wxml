@@ -1,0 +1,52 @@
+<import src="../../../common/head.wxml" />
+<import src="../../../common/foot.wxml" />
+
+<view class="container">
+  <template is="head" data="{{title: 'openLocation'}}"/>
+
+  <view class="page-body">
+    <view class="page-section">
+      <form bindsubmit="openLocation">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">经度</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" disabled="{{true}}"  value="{{longitude}}" name="longitude"></input>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">纬度</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" disabled="{{true}}"  value="{{latitude}}" name="latitude"></input>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">位置名称</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" disabled="{{true}}"  value="金隅嘉华大厦" name="name"></input>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">详细位置</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" disabled="{{true}}"  value="上地三街" name="address"></input>
+            </view>
+          </view>
+        </view>
+        <view class="btn-area">
+          <button type="primary" formType="submit">查看位置</button>
+        </view>
+      </form>
+    </view>
+  </view>
+
+  <template is="foot" />
+</view>
